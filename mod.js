@@ -127,7 +127,6 @@ const MEDIA_TYPES = {
 };
 
 const PATHNAME_PREFIX = "/melhosseiny/daily-prophet/main";
-const RAW_PATHNAME_PREFIX = "/melhosseiny/daily-prophet/raw/main";
 const ext = (pathname) => `.${pathname.split(".").pop()}`;
 const content_type = (pathname) => MEDIA_TYPES[ext(pathname)];
 
@@ -139,30 +138,16 @@ addEventListener("fetch", async (event) => {
   pathname = pathname === "/" ? "/index_inline.html" : pathname;
   console.log(event.request.url, pathname, PATHNAME_PREFIX, import.meta.url);
 
-  const url = static_path.some(prefix => pathname.startsWith(prefix))
-    ? import.meta.url.startsWith("file")
-      ? new URL(pathname, "http://localhost:8081")
-      : new URL(PATHNAME_PREFIX + pathname, import.meta.url)
-    : import.meta.url.startsWith("file")
-      ? new URL("/index_inline.html", "http://localhost:8081")
-      : new URL(PATHNAME_PREFIX + "/index_inline.html", import.meta.url);
+  let response_body = static_path.some(prefix => pathname.startsWith(prefix))
+    ? await Deno.readFile(`.${pathname}`)
+    : await Deno.readFile('./index_inline.html');
 
-  console.log(url.href);
-
-  const res = await fetch(url, {
-    headers: {
-      "Authorization": `token ${Deno.env.get("GITHUB_ACCESS_TOKEN")}`,
-    },
-  });
-
-  const headers = new Headers({
-    "content-type": content_type(pathname),
-    "access-control-allow-origin": "*",
-    "cache-control": "no-cache"
-  });
-
-  event.respondWith(new Response(res.body, {
+  event.respondWith(new Response(response_body, {
     status: 200,
-    headers
+    headers: new Headers({
+      "content-type": content_type(pathname),
+      "access-control-allow-origin": "*",
+      "cache-control": "no-cache"
+    })
   }));
 });

@@ -1,8 +1,8 @@
 import { html, state, web_component, define_component } from "https://busy-dog-44.deno.dev/melhosseiny/sourdough/main/sourdough.js";
 import { tags } from "/components/tags.js";
 
-const ASSET_HOST = "http://localhost:4507";
-//const ASSET_HOST = "https://important-deer-81.deno.dev";
+//const ASSET_HOST = "http://localhost:4507";
+const ASSET_HOST = "https://famous-trout-70.deno.dev";
 const PAGE_SIZE = 10;
 
 const format_date = (datetime) => {
