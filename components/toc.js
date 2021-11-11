@@ -12,6 +12,12 @@ const format_date = (datetime) => {
 }
 
 const template = (data) => html`
+  <div>
+    ${ Array(50).fill().map((a, index) => `
+        <img src="/icons/test/icon${index+1}.png" alt="">
+      `).join('')
+    }
+  </div>
   <div ref="page">
     <ul class="toc">
       ${ data.page && data.page.notes
