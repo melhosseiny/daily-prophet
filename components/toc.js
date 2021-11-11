@@ -19,7 +19,7 @@ const template = (data) => html`
           <li>
             <a href="/${note.id}">${note.name}</a>
             <figure>
-              <img ${ index > 2 ? `loading="lazy"`: '' } width="768" height="512" src="${note.img}" alt="">
+              <img width="768" height="512" src="${note.img}" alt="">
             </figure>
             <br>
             <time datetime="${note.time}">${format_date(note.time)}</time>
