@@ -1,7 +1,7 @@
 import { html, state, web_component, define_component } from "https://busy-dog-44.deno.dev/melhosseiny/sourdough/main/sourdough.js";
 import { tags } from "/components/tags.js";
 
-//const ASSET_HOST = "http://localhost:4507";
+// const ASSET_HOST = "http://localhost:4507";
 const ASSET_HOST = "https://famous-trout-70.deno.dev";
 const PAGE_SIZE = 10;
 
@@ -15,11 +15,11 @@ const template = (data) => html`
   <div ref="page">
     <ul class="toc">
       ${ data.page && data.page.notes
-        ? data.page.notes.map((note) => `
+        ? data.page.notes.map((note, index) => `
           <li>
             <a href="/${note.id}">${note.name}</a>
             <figure>
-              <img src="${note.img}" alt="">
+              <img ${ index > 2 ? `loading="lazy"`: '' } width="768" height="512" src="${note.img}" alt="">
             </figure>
             <br>
             <time datetime="${note.time}">${format_date(note.time)}</time>
@@ -31,13 +31,17 @@ const template = (data) => html`
       }
     </ul>
     ${ data.page && data.page.has_more
-      ? `<a id="more" class="button" href="#">Older notes <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg></a>`
+      ? `<a id="more" href="#">More articles</a>`
       : ''
     }
   </div>
 `
 
 const style = `
+  .toc {
+    max-width: 38em;
+  }
+
   .toc > li {
     display: flex;
     flex-direction: row;
@@ -67,7 +71,8 @@ const style = `
   }
 
   .toc img {
-    width: 150px;
+    max-width: 100%;
+    height: auto;
   }
 
   wd-tags::part(tags) {
