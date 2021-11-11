@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2">
+    <meta name="author" content="Mostafa Elshamy">
+    <meta name="description" content="wizarding newspaper">
+    <meta name="theme-color" content="#ffffff">
+    <title>Daily Prophet</title>
+    <link rel="preconnect" href="https://busy-dog-44.deno.dev">
+    <link rel="preconnect" href="https://important-deer-81.deno.dev">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/css/type.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/layout.css" crossorigin="anonymous">
+    <script type="module">
+      import { set_shared_style_sheets } from "https://busy-dog-44.deno.dev/melhosseiny/sourdough/main/sourdough.js";
+      const document_style_sheets = [...document.styleSheets].slice(0,4);
+      set_shared_style_sheets(document_style_sheets);
+    </script>
+  </head>
+  <body>
+    <ad-progress id="progress"></ad-progress>
+    <header>
+      <hgroup>
+        <h1>
+          <span></span>
+          <a class="base" href="/">Daily Prophet</a>
+        </h1>
+      </hgroup>
+    </header>
+    <main id="main"></main>
+    <script type="module">
+      import { get_constructed_style_sheet } from "https://busy-dog-44.deno.dev/melhosseiny/sourdough/main/sourdough.js";
+
+      const document_style_sheets = [...document.styleSheets].slice(0,4);
+
+      let document_constructed_sheets;
+      try {
+        document_constructed_sheets = document_style_sheets.map(get_constructed_style_sheet);
+      } catch (error) {}
+
+      import "/components/app.js";
+
+      import { progress } from "https://busy-dog-44.deno.dev/melhosseiny/aurora/main/src/progress/progress.js";
+      import { toc } from "/components/toc.js";
+
+      try {
+        ["ad-progress", "wd-toc"].forEach(element => {
+          if (document.querySelector(element)) {
+            document.querySelector(element).component.adopt_styles(document_constructed_sheets);
+          }
+        });
+      } catch (error) {}
+    </script>
+  </body>
+</html>
