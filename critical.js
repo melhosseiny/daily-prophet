@@ -15,8 +15,8 @@ const links = Array.from(doc.querySelectorAll("link"));
 
 const inline_css = async (href) => {
   // console.log(href);
-  console.log(new URL(href, "http://localhost:8080").href);
-  const inline = await (await fetch(new URL(href, "http://localhost:8080").href)).text();
+  console.log(new URL(href, "http://localhost:8000").href);
+  const inline = await (await fetch(new URL(href, "http://localhost:8000").href)).text();
   const min = await esbuild.transform(inline, { loader: 'css', minify: true });
   console.log('result:', min.code);
   return min.code;
