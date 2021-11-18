@@ -1,3 +1,5 @@
+import { serve } from "https://deno.land/std@0.115.1/http/server.ts";
+
 const MEDIA_TYPES = {
   ".md": "text/markdown",
   ".html": "text/html",
@@ -132,22 +134,22 @@ const content_type = (pathname) => MEDIA_TYPES[ext(pathname)];
 
 const static_path = ["/components", "/css", "/fonts", "/icons", "/utils", "/favicon.ico", "/robots.txt", "/manifest.webmanifest"];
 
-addEventListener("fetch", async (event) => {
-  let { pathname } = new URL(event.request.url);
+await serve(async (request) => {
+  let { pathname } = new URL(request.url);
 
   pathname = pathname === "/" ? "/index_inline.html" : pathname;
-  console.log(event.request.url, pathname, PATHNAME_PREFIX, import.meta.url);
+  console.log(request.url, pathname, PATHNAME_PREFIX, import.meta.url);
 
   let response_body = static_path.some(prefix => pathname.startsWith(prefix))
     ? await Deno.readFile(`.${pathname}`)
     : await Deno.readFile('./index_inline.html');
 
-  event.respondWith(new Response(response_body, {
+  return new Response(response_body, {
     status: 200,
     headers: new Headers({
       "content-type": content_type(pathname),
       "access-control-allow-origin": "*",
       "cache-control": "no-cache"
     })
-  }));
+  });
 });
