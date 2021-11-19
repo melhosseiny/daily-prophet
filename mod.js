@@ -134,7 +134,7 @@ const content_type = (pathname) => MEDIA_TYPES[ext(pathname)];
 
 const static_path = ["/components", "/css", "/fonts", "/icons", "/utils", "/favicon.ico", "/robots.txt", "/manifest.webmanifest"];
 
-await serve(async (request) => {
+serve(async (request) => {
   let { pathname } = new URL(request.url);
 
   pathname = pathname === "/" ? "/index_inline.html" : pathname;
