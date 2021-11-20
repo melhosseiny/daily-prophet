@@ -141,7 +141,12 @@ serve(async (request) => {
   console.log(request.url, pathname, PATHNAME_PREFIX, import.meta.url);
 
   let response_body = static_path.some(prefix => pathname.startsWith(prefix))
-    ? await Deno.readFile(`.${pathname}`)
+    // ? await Deno.readFile(`.${pathname}`)
+    ? (await fetch(new URL(PATHNAME_PREFIX + pathname, "https://raw.githubusercontent.com/"), {
+      headers: {
+        "Authorization": `token ${Deno.env.get("GITHUB_ACCESS_TOKEN")}`,
+      },
+    })).body
     : await Deno.readFile('./index_inline.html');
 
   return new Response(response_body, {
