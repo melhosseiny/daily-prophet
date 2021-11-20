@@ -14,7 +14,7 @@ const format_date = (datetime) => {
 const template = (data) => html`
   <div>
     ${ Array(50).fill().map((a, index) => `
-        <img src="/icons/test/icon${index+1}.png" alt="">
+        <img width="24" height="24" src="/icons/test/icon${index+1}.png" alt="">
       `).join('')
     }
   </div>
