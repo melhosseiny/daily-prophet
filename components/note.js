@@ -1,7 +1,7 @@
 import { html, state, web_component, define_component } from "https://busy-dog-44.deno.dev/melhosseiny/sourdough/main/sourdough.js";
 
-const ASSET_HOST = "http://localhost:4507";
-//const ASSET_HOST = "https://famous-trout-70.deno.dev";
+//const ASSET_HOST = "http://localhost:4507";
+const ASSET_HOST = "https://famous-trout-70.deno.dev";
 
 const template = (data) => html`
   <article ref="markup" class="${data.id}">
