@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "run": "deno run --allow-net --allow-read mod.js",
+    "critical": "deno run --allow-net --allow-env --allow-run --allow-read --allow-write https://raw.githubusercontent.com/melhosseiny/critical/main/mod.js index.html"
+  },
+  "importMap": "import_map.json"
+}
